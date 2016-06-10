@@ -57,7 +57,7 @@
         },
         "storageAccountPrefix": {
             "type": "string",
-            "defaultValue": "xomlustreservers"
+            "defaultValue": "xomlustreservers",
             "metadata": {
                 "description": "Storage account prefix that will be concatenated with the numeric suffix to create storage accounts for Lustre nodes"
             }
