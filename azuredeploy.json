@@ -320,7 +320,7 @@
         },
         "vnetName": {
             "type": "string",
-            "defaultValue": "XOM-IaaS-VNet"
+            "defaultValue": "XOM-IaaS-VNet",
             "metadata": {
                 "description": "Virtual Network name (e.g. vnet-lustre)"
             }
