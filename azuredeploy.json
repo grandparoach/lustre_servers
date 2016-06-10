@@ -682,6 +682,16 @@
                             },
                             "caching": "None",
                             "createOption": "Empty"
+                        },
+                        {
+                            "name": "datadisk1",
+                            "diskSizeGB": 128,
+                            "lun": 1,
+                            "vhd": {
+                                "uri": "[concat('http://', parameters('storageAccountPrefix'), variables('mdsStorageAccountNumber'), '.blob.core.windows.net/vhds/', concat(parameters('vmNamePrefix'),'mds'), '-datadisk1.vhd')]"
+                            },
+                            "caching": "None",
+                            "createOption": "Empty"
                         }
                     ]
                 },
