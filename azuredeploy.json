@@ -57,7 +57,7 @@
         },
         "storageAccountPrefix": {
             "type": "string",
-            "defaultValue": "xomlustreservers",
+            "defaultValue": "xomlustreserver",
             "metadata": {
                 "description": "Storage account prefix that will be concatenated with the numeric suffix to create storage accounts for Lustre nodes"
             }
@@ -71,7 +71,7 @@
         },
         "storageAccountResourceGroup": {
             "type": "string",
-            "defaultValue": "[resourceGroup().name]",
+            "defaultValue": "XOM_AZURE_HPC",
             "metadata": {
                 "description": "Storage account resource group for future cases when existing storage account is used"
             }
@@ -85,7 +85,7 @@
         },
         "vmNamePrefix": {
             "type": "string",
-            "defaultValue": "xomlustre",
+            "defaultValue": "xomlustreserver",
             "metadata": {
                 "description": "Prefix that will be used for all virtual machines in this Lustre cluster (e.g. lustre)"
             }
@@ -124,7 +124,7 @@
         },
         "dnsNamePrefix": {
             "type": "string",
-            "defaultValue": "xomlustreservers",
+            "defaultValue": "xomlustreserver",
             "metadata": {
                 "description": "Globally unique DNS name prefix name must be between 3 and 50 characters long and can contain only dashes, numbers, and lowercase letters. The domain name suffix (e.g. westus.cloudapp.zure.com) will be automatically updated based on the selected location."
             }
@@ -313,14 +313,14 @@
         },
         "vnetResourceGroup": {
             "type": "string",
-            "defaultValue": "RG-Network",
+            "defaultValue": "RG-Networking",
             "metadata": {
                 "description": "Virtual Network Resource Group for cases when Lustre nodes are deployed into an existing VNet"
             }
         },
         "vnetName": {
             "type": "string",
-            "defaultValue": "XOM-IaaS-VNet",
+            "defaultValue": "VNET_XOM_IaaS_SCUS",
             "metadata": {
                 "description": "Virtual Network name (e.g. vnet-lustre)"
             }
@@ -338,35 +338,35 @@
         },
         "vnetAddressPrefix": {
             "type": "string",
-            "defaultValue": "10.190.24.0/24",
+            "defaultValue": "10.190.64.0/24",
             "metadata": {
                 "description": "Virtual Network Address Prefix (i.e. CIDR)"
             }
         },
         "subnetServersName": {
             "type": "string",
-            "defaultValue": "Sub_10.190.24.0_25",
+            "defaultValue": "Sub_10.190.64.128_26",
             "metadata": {
                 "description": "Lustre servers will be deployed into this subnet within the Virtual Network"
             }
         },
         "subnetServersAddressPrefix": {
             "type": "string",
-            "defaultValue": "10.190.24.0/25",
+            "defaultValue": "10.190.64.128/26",
             "metadata": {
                 "description": "Virtual Network Lustre Servers subnet Address Prefix (i.e. CIDR)"
             }
         },
         "subnetClientsName": {
             "type": "string",
-            "defaultValue": "Sub_10.190.24.128_26",
+            "defaultValue": "Sub_10.190.64.0_25",
             "metadata": {
                 "description": "Lustre clients can be deployed into this subnet within the Virtual Network"
             }
         },
         "subnetClientsAddressPrefix": {
             "type": "string",
-            "defaultValue": "10.190.24.128/26",
+            "defaultValue": "10.190.64.0/25",
             "metadata": {
                 "description": "Virtual Network Lustre Clients subnet Address Prefix (i.e. CIDR)"
             }
