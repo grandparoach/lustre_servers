@@ -305,7 +305,7 @@
             }
         },
         "filesystemName": {
-            "type": "home",
+            "type": "string",
             "defaultValue": "home",
             "metadata": {
                 "description": "Name of the Lustre filesytem (e.g. scratch, lustre, shared_data) that will be mounted from clients as mgsip@tcp0:/filesystemname"
