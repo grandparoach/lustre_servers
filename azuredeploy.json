@@ -843,7 +843,7 @@
                             "createOption": "Empty"
                         },
                         {
-                            "name": "datadisk2",
+                            "name": "datadisk4",
                             "diskSizeGB": "[parameters('ossDiskSize')]",
                             "lun": 4,
                             "vhd": {
@@ -853,7 +853,7 @@
                             "createOption": "Empty"
                         },
                         {
-                            "name": "datadisk2",
+                            "name": "datadisk5",
                             "diskSizeGB": "[parameters('ossDiskSize')]",
                             "lun": 5,
                             "vhd": {
