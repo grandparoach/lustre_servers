@@ -122,13 +122,6 @@
                 "description": "Authentication type for the virtual machines"
             }
         },
-        "dnsNamePrefix": {
-            "type": "string",
-            "defaultValue": "xomlustreserver",
-            "metadata": {
-                "description": "Globally unique DNS name prefix name must be between 3 and 50 characters long and can contain only dashes, numbers, and lowercase letters. The domain name suffix (e.g. westus.cloudapp.zure.com) will be automatically updated based on the selected location."
-            }
-        },
         "mgsVmSize": {
             "type": "string",
             "defaultValue": "Standard_DS4",
@@ -476,25 +469,11 @@
         },
         {
             "apiVersion": "2015-06-15",
-            "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[concat(parameters('vmNamePrefix'),'mgs')]",
-            "location": "[parameters('location')]",
-            "properties": {
-                "publicIPAllocationMethod": "Dynamic",
-                "idleTimeoutInMinutes": 4,
-                "dnsSettings": {
-                    "domainNameLabel": "[concat(parameters('dnsNamePrefix'),'')]"
-                }
-            }
-        },
-        {
-            "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[concat(parameters('vmNamePrefix'),'mgs')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Resources/deployments/', 'vnet')]",
-                "[concat('Microsoft.Network/publicIPAddresses/', concat(parameters('vmNamePrefix'),'mgs'))]"
+                "[concat('Microsoft.Resources/deployments/', 'vnet')]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -502,9 +481,6 @@
                         "name": "ip1",
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('vmNamePrefix'), 'mgs'))]"
-                            },
                             "subnet": {
                                 "id": "[variables('subnetServersID')]"
                             }
@@ -839,20 +815,6 @@
             "value": "[concat('',reference(resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmNamePrefix'), 'mgs'))).ipConfigurations[0].properties.privateIPAddress)]",
             "metadata": {
                 "description": "MGS node private IP address and NID."
-            }
-        },
-        "mgsDomainName": {
-            "type": "string",
-            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('vmNamePrefix'),'mgs'))).dnsSettings.fqdn]",
-            "metadata": {
-                "description": "SSH to the MGS node using this public IP address and run command 'ltop' to view Lustre Monitoring Tool"
-            }
-        },
-        "gangliaUrl": {
-            "type": "string",
-            "value": "[concat('http://',reference(resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('vmNamePrefix'),'mgs'))).dnsSettings.fqdn,'/ganglia/')]",
-            "metadata": {
-                "description": "URL to access Ganglia Monitoring System on the MGS node"
             }
         },
         "mountCommand": {
