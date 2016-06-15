@@ -589,26 +589,6 @@
         },
         {
             "apiVersion": "2015-06-15",
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('vmNamePrefix'), 'mgs', '/init')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('vmNamePrefix'), 'mgs'))]"
-            ],
-            "properties": {
-                "publisher": "Microsoft.OSTCExtensions",
-                "type": "CustomScriptForLinux",
-                "typeHandlerVersion": "1.3",
-                "settings": {
-                    "fileUris": [
-                        "[variables('scriptUrlLustre')]"
-                    ],
-                    "commandToExecute": "[concat('sh lustre.sh', ' -n MGS', ' -i 0', ' -d ', variables('mgsDiskCount'), ' -m ', reference(resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmNamePrefix'), 'mgs'))).ipConfigurations[0].properties.privateIPAddress, ' -l ', reference(resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmNamePrefix'), 'mgs'))).ipConfigurations[0].properties.privateIPAddress, ' -f ', parameters('filesystemName'))]"
-                }
-            }
-        },
-        {
-            "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[concat(parameters('vmNamePrefix'),'mds')]",
             "location": "[parameters('location')]",
@@ -701,27 +681,6 @@
                             "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('vmNamePrefix'),'mds'))]"
                         }
                     ]
-                }
-            }
-        },
-        {
-            "apiVersion": "2015-06-15",
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('vmNamePrefix'), 'mds', '/init')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('vmNamePrefix'), 'mds'))]",
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmNamePrefix'), 'mgs', '/extensions/init')]"
-            ],
-            "properties": {
-                "publisher": "Microsoft.OSTCExtensions",
-                "type": "CustomScriptForLinux",
-                "typeHandlerVersion": "1.3",
-                "settings": {
-                    "fileUris": [
-                        "[variables('scriptUrlLustre')]"
-                    ],
-                    "commandToExecute": "[concat('sh lustre.sh', ' -n MDS', ' -i 0', ' -d ', variables('mdsDiskCount'), ' -m ', reference(resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmNamePrefix'), 'mgs'))).ipConfigurations[0].properties.privateIPAddress, ' -l ', reference(resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmNamePrefix'), 'mds'))).ipConfigurations[0].properties.privateIPAddress, ' -f ', parameters('filesystemName'))]"
                 }
             }
         },
@@ -870,31 +829,6 @@
                             "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('vmNamePrefix'), 'oss', copyIndex()))]"
                         }
                     ]
-                }
-            }
-        },
-        {
-            "apiVersion": "2015-06-15",
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('vmNamePrefix'), 'oss', copyIndex(), '/init')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('vmNamePrefix'), 'oss', copyIndex()))]",
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmNamePrefix'), 'mds', '/extensions/init')]"
-            ],
-            "copy": {
-                "name": "ossExtensionsCopy",
-                "count": "[parameters('ossCount')]"
-            },
-            "properties": {
-                "publisher": "Microsoft.OSTCExtensions",
-                "type": "CustomScriptForLinux",
-                "typeHandlerVersion": "1.3",
-                "settings": {
-                    "fileUris": [
-                        "[variables('scriptUrlLustre')]"
-                    ],
-                    "commandToExecute": "[concat('sh lustre.sh', ' -n OSS', ' -i ', copyIndex(), ' -d ', variables('ossDiskCount'), ' -m ', reference(resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmNamePrefix'), 'mgs'))).ipConfigurations[0].properties.privateIPAddress, ' -l ', reference(resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmNamePrefix'), 'oss', copyIndex()))).ipConfigurations[0].properties.privateIPAddress, ' -f ', parameters('filesystemName'))]"
                 }
             }
         },
