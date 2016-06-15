@@ -831,47 +831,6 @@
                     ]
                 }
             }
-        },
-        {
-            "apiVersion": "2015-01-01",
-            "type": "Microsoft.Resources/deployments",
-            "name": "monitoring",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('vmNamePrefix'), 'oss0', '/extensions/init'))]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "contentVersion": "1.0.0.0",
-                    "uri": "[variables('templateUrlMonitoring')]"
-                },
-                "parameters": {
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "vmNamePrefix": {
-                        "value": "[parameters('vmNamePrefix')]"
-                    },
-                    "ossCount": {
-                        "value": "[parameters('ossCount')]"
-                    },
-                    "filesystemName": {
-                        "value": "[parameters('filesystemName')]"
-                    },
-                    "scriptUrlMonitoring": {
-                        "value": "[variables('scriptUrlMonitoring')]"
-                    },
-                    "mgsip": {
-                        "value": "[reference(resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmNamePrefix'), 'mgs'))).ipConfigurations[0].properties.privateIPAddress]"
-                    },
-                    "mdsip0": {
-                        "value": "[reference(resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmNamePrefix'), 'mds'))).ipConfigurations[0].properties.privateIPAddress]"
-                    },
-                    "ossip0": {
-                        "value": "[reference(resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmNamePrefix'), 'oss0'))).ipConfigurations[0].properties.privateIPAddress]"
-                    }
-                }
-            }
         }
     ],
     "outputs": {
